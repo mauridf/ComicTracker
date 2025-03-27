@@ -27,6 +27,14 @@ public class PublisherService : IPublisherService
         {
             var comicVineResponse = await _comicVineService.GetPublishers($"name:{name}");
 
+            // Verifique se há resultados
+            if (comicVineResponse?.Results == null)
+            {
+                response.Success = false;
+                response.Message = "No results from Comic Vine API";
+                return response;
+            }
+
             if (comicVineResponse.Error != "OK")
             {
                 response.Success = false;
@@ -48,7 +56,9 @@ public class PublisherService : IPublisherService
         catch (Exception ex)
         {
             response.Success = false;
-            response.Message = ex.Message;
+            response.Message = ex.Message.Contains("403")
+                ? "Access denied. Please check your Comic Vine API key."
+                : ex.Message;
             response.Errors.Add(ex.Message);
         }
 
