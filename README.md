@@ -1,6 +1,6 @@
 # ComicTracker API
 
-![ComicTracker Logo](coloque_seu_logo_aqui.png)
+![ComicTracker Logo](logo.png)
 
 API para gerenciamento de coleções de HQs (Scans) integrada com a Comic Vine.
 
@@ -128,10 +128,10 @@ Distribuído sob a licença **MIT**. Veja `LICENSE` para mais informações.
 
 ## ✉️ Contato
 
-Seu Nome - [@seu_twitter](https://twitter.com/seu_twitter) - seuemail@exemplo.com
+Maurício Dias de Carvalho Oliveira - mauridf@gmail.com
 
-Link do Projeto: [https://github.com/seuusuario/ComicTracker](https://github.com/seuusuario/ComicTracker)
+Link do Projeto: [https://github.com/mauridf/ComicTracker](https://github.com/mauridf/ComicTracker)
 
 ---
 
-Made with ❤️ by **Seu Nome**
+Made with ❤️ by **MAURÍCIO DIAS DE CARVALHO OLIVEIRA**
