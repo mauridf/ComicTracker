@@ -1,5 +1,7 @@
 ﻿using ComicTracker.Application.DTOs;
+using ComicTracker.Application.Interfaces;
 using ComicTracker.Domain.Entities;
+using ComicTracker.Domain.Interfaces;
 
 namespace ComicTracker.Application.Services;
 
@@ -31,7 +33,6 @@ public class PublisherService : IPublisherService
                 return response;
             }
 
-            // Filtrar publishers já existentes no banco
             var existingIds = await _publisherRepository.GetAll()
                 .Where(p => comicVineResponse.Results.Select(cv => cv.Id).Contains(p.ComicVineId))
                 .Select(p => p.ComicVineId)
@@ -47,6 +48,7 @@ public class PublisherService : IPublisherService
         {
             response.Success = false;
             response.Message = ex.Message;
+            response.Errors.Add(ex.Message);
         }
 
         return response;
@@ -58,7 +60,6 @@ public class PublisherService : IPublisherService
 
         try
         {
-            // Verificar se já existe
             if (await _publisherRepository.ExistsByComicVineId(publisherDto.ComicVineId))
             {
                 response.Success = false;
@@ -70,7 +71,13 @@ public class PublisherService : IPublisherService
             {
                 ComicVineId = publisherDto.ComicVineId,
                 Name = publisherDto.Name,
-                // Mapear outros campos...
+                Aliases = publisherDto.Aliases,
+                Deck = publisherDto.Deck,
+                ImageUrl = publisherDto.ImageUrl,
+                LocationAddress = publisherDto.LocationAddress,
+                LocationCity = publisherDto.LocationCity,
+                LocationState = publisherDto.LocationState,
+                SiteDetailUrl = publisherDto.SiteDetailUrl
             };
 
             await _publisherRepository.AddAsync(publisher);
@@ -82,10 +89,50 @@ public class PublisherService : IPublisherService
         {
             response.Success = false;
             response.Message = ex.Message;
+            response.Errors.Add(ex.Message);
         }
 
         return response;
     }
 
-    // Outros métodos...
+    // Implementação dos outros métodos
+    public async Task<ServiceResponse<Publisher>> GetPublisherById(int id)
+    {
+        var response = new ServiceResponse<Publisher>();
+        try
+        {
+            var publisher = await _publisherRepository.GetByIdAsync(id);
+            if (publisher == null)
+            {
+                response.Success = false;
+                response.Message = "Publisher not found";
+                return response;
+            }
+            response.Data = publisher;
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            response.Errors.Add(ex.Message);
+        }
+        return response;
+    }
+
+    public async Task<ServiceResponse<List<Publisher>>> GetAllPublishers()
+    {
+        var response = new ServiceResponse<List<Publisher>>();
+        try
+        {
+            var publishers = await _publisherRepository.GetAll().ToListAsync();
+            response.Data = publishers;
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            response.Errors.Add(ex.Message);
+        }
+        return response;
+    }
 }

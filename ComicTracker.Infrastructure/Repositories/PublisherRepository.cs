@@ -1,16 +1,41 @@
 ﻿using ComicTracker.Domain.Entities;
+using ComicTracker.Domain.Interfaces;
 using ComicTracker.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComicTracker.Infrastructure.Repositories;
 
-public class PublisherRepository : GenericRepository<Publisher>, IPublisherRepository
+public class PublisherRepository : IPublisherRepository
 {
-    public PublisherRepository(ComicTrackerDbContext context) : base(context) { }
+    private readonly ComicTrackerDbContext _context;
+
+    public PublisherRepository(ComicTrackerDbContext context)
+    {
+        _context = context;
+    }
 
     public async Task<bool> ExistsByComicVineId(int comicVineId)
     {
-        return await _dbSet.AnyAsync(p => p.ComicVineId == comicVineId);
+        return await _context.Publishers.AnyAsync(p => p.ComicVineId == comicVineId);
     }
 
-    // Outros métodos específicos para Publisher
+    public async Task AddAsync(Publisher publisher)
+    {
+        await _context.Publishers.AddAsync(publisher);
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
+
+    public IQueryable<Publisher> GetAll()
+    {
+        return _context.Publishers.AsQueryable();
+    }
+
+    public async Task<Publisher> GetByIdAsync(int id)
+    {
+        return await _context.Publishers.FindAsync(id);
+    }
 }

@@ -1,5 +1,9 @@
+using ComicTracker.Application.Interfaces;
 using ComicTracker.Application.Services;
+using ComicTracker.Domain.Interfaces;
 using ComicTracker.Infrastructure.Data;
+using ComicTracker.Infrastructure.Repositories;
+using ComicTracker.Infrastructure.Services.ComicVine;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +17,9 @@ builder.Services.Configure<ComicVineSettings>(builder.Configuration.GetSection("
 builder.Services.AddHttpClient<IComicVineService, ComicVineService>();
 
 // Registrar repositórios e serviços
-builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IPublisherService, PublisherService>();
-// Registrar outros serviços...
+builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IComicVineService, ComicVineService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

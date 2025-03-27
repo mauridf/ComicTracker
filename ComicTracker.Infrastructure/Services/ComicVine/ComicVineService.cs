@@ -1,6 +1,8 @@
-﻿namespace ComicTracker.Infrastructure.Services.ComicVine;
+﻿using ComicTracker.Application.DTOs;
+using ComicTracker.Application.Interfaces;
 using System.Net.Http.Json;
-using ComicTracker.Application.DTOs.ComicVine;
+
+namespace ComicTracker.Infrastructure.Services.ComicVine;
 
 public class ComicVineService : IComicVineService
 {
@@ -19,27 +21,5 @@ public class ComicVineService : IComicVineService
         return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVinePublisher>>(url);
     }
 
-    public async Task<ComicVineResponse<ComicVineCharacter>> GetCharacters(string filter)
-    {
-        var url = $"characters/?api_key={_settings.ApiKey}&format=json&filter={filter}";
-        return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVineCharacter>>(url);
-    }
-
-    public async Task<ComicVineResponse<ComicVineTeam>> GetTeams(string filter)
-    {
-        var url = $"teams/?api_key={_settings.ApiKey}&format=json&filter={filter}";
-        return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVineTeam>>(url);
-    }
-
-    public async Task<ComicVineResponse<ComicVineVolume>> GetVolumes(string filter)
-    {
-        var url = $"volumes/?api_key={_settings.ApiKey}&format=json&filter={filter}";
-        return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVineVolume>>(url);
-    }
-
-    public async Task<ComicVineResponse<ComicVineIssue>> GetIssues(string filter)
-    {
-        var url = $"issues/?api_key={_settings.ApiKey}&format=json&filter={filter}";
-        return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVineIssue>>(url);
-    }
+    // Implemente outros métodos conforme necessário
 }

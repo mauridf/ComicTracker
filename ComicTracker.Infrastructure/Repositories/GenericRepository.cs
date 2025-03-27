@@ -1,4 +1,5 @@
 ﻿using ComicTracker.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComicTracker.Infrastructure.Repositories;
 
