@@ -2,6 +2,7 @@
 using ComicTracker.Application.Interfaces;
 using ComicTracker.Domain.Entities;
 using ComicTracker.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ComicTracker.Application.Services;
 
@@ -36,7 +37,7 @@ public class PublisherService : IPublisherService
             var existingIds = await _publisherRepository.GetAll()
                 .Where(p => comicVineResponse.Results.Select(cv => cv.Id).Contains(p.ComicVineId))
                 .Select(p => p.ComicVineId)
-                .ToListAsync();
+                .ToListAsync(); // Agora funcionará com a diretiva using
 
             var filteredResults = comicVineResponse.Results
                 .Where(r => !existingIds.Contains(r.Id))
@@ -133,6 +134,77 @@ public class PublisherService : IPublisherService
             response.Message = ex.Message;
             response.Errors.Add(ex.Message);
         }
+        return response;
+    }
+
+    public async Task<ServiceResponse<Publisher>> UpdatePublisher(PublisherUpdateDto publisherDto)
+    {
+        var response = new ServiceResponse<Publisher>();
+
+        try
+        {
+            var publisher = await _publisherRepository.GetByIdAsync(publisherDto.Id);
+
+            if (publisher == null)
+            {
+                response.Success = false;
+                response.Message = "Publisher not found";
+                return response;
+            }
+
+            // Atualiza apenas os campos que podem ser modificados
+            publisher.Name = publisherDto.Name;
+            publisher.Aliases = publisherDto.Aliases;
+            publisher.Deck = publisherDto.Deck;
+            publisher.ImageUrl = publisherDto.ImageUrl;
+            publisher.LocationAddress = publisherDto.LocationAddress;
+            publisher.LocationCity = publisherDto.LocationCity;
+            publisher.LocationState = publisherDto.LocationState;
+            publisher.SiteDetailUrl = publisherDto.SiteDetailUrl;
+
+            _publisherRepository.Update(publisher);
+            await _publisherRepository.SaveChangesAsync();
+
+            response.Data = publisher;
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            response.Errors.Add(ex.Message);
+        }
+
+        return response;
+    }
+
+    public async Task<ServiceResponse<bool>> DeletePublisher(int id)
+    {
+        var response = new ServiceResponse<bool>();
+
+        try
+        {
+            var publisher = await _publisherRepository.GetByIdAsync(id);
+
+            if (publisher == null)
+            {
+                response.Success = false;
+                response.Message = "Publisher not found";
+                return response;
+            }
+
+            _publisherRepository.Delete(publisher);
+            await _publisherRepository.SaveChangesAsync();
+
+            response.Data = true;
+        }
+        catch (Exception ex)
+        {
+            response.Success = false;
+            response.Message = ex.Message;
+            response.Errors.Add(ex.Message);
+            response.Data = false;
+        }
+
         return response;
     }
 }

@@ -8,5 +8,7 @@ public interface IPublisherRepository
     Task AddAsync(Publisher publisher);
     Task SaveChangesAsync();
     IQueryable<Publisher> GetAll();
-    // Adicione outros métodos conforme necessário
+    Task<Publisher> GetByIdAsync(int id);
+    void Update(Publisher publisher);
+    void Delete(Publisher publisher);
 }

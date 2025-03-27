@@ -14,7 +14,7 @@ public class Volume
     public string? PublisherName { get; set; }
     public string? SiteDetailUrl { get; set; }
     public int? StartYear { get; set; }
-
-    public Publisher? Publisher { get; set; }
+    public int PublisherId { get; set; }
+    public Publisher Publisher { get; set; }
     public ICollection<Issue> Issues { get; set; }
 }

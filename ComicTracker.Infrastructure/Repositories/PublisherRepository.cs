@@ -2,40 +2,53 @@
 using ComicTracker.Domain.Interfaces;
 using ComicTracker.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ComicTracker.Infrastructure.Repositories;
-
-public class PublisherRepository : IPublisherRepository
+namespace ComicTracker.Infrastructure.Repositories
 {
-    private readonly ComicTrackerDbContext _context;
-
-    public PublisherRepository(ComicTrackerDbContext context)
+    public class PublisherRepository : IPublisherRepository
     {
-        _context = context;
-    }
+        private readonly ComicTrackerDbContext _context;
 
-    public async Task<bool> ExistsByComicVineId(int comicVineId)
-    {
-        return await _context.Publishers.AnyAsync(p => p.ComicVineId == comicVineId);
-    }
+        public PublisherRepository(ComicTrackerDbContext context)
+        {
+            _context = context;
+        }
 
-    public async Task AddAsync(Publisher publisher)
-    {
-        await _context.Publishers.AddAsync(publisher);
-    }
+        public async Task<bool> ExistsByComicVineId(int comicVineId)
+        {
+            return await _context.Publishers.AnyAsync(p => p.ComicVineId == comicVineId);
+        }
 
-    public async Task SaveChangesAsync()
-    {
-        await _context.SaveChangesAsync();
-    }
+        public async Task AddAsync(Publisher publisher)
+        {
+            await _context.Publishers.AddAsync(publisher);
+        }
 
-    public IQueryable<Publisher> GetAll()
-    {
-        return _context.Publishers.AsQueryable();
-    }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
 
-    public async Task<Publisher> GetByIdAsync(int id)
-    {
-        return await _context.Publishers.FindAsync(id);
+        public IQueryable<Publisher> GetAll()
+        {
+            return _context.Publishers.AsQueryable();
+        }
+
+        public async Task<Publisher> GetByIdAsync(int id)
+        {
+            return await _context.Publishers.FindAsync(id);
+        }
+
+        public void Update(Publisher publisher)
+        {
+            _context.Publishers.Update(publisher);
+        }
+
+        public void Delete(Publisher publisher)
+        {
+            _context.Publishers.Remove(publisher);
+        }
     }
 }
