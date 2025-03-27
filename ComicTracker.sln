@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicTracker.API", "ComicTracker.API\ComicTracker.API.csproj", "{D818EAAF-ED1F-401B-B99E-3C301FAE6417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicTracker.Application", "ComicTracker.Application\ComicTracker.Application.csproj", "{08EBA5D3-8EC3-403A-B7D9-662F08430477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicTracker.Domain", "ComicTracker.Domain\ComicTracker.Domain.csproj", "{A7CDBF13-6C3E-4154-AAF7-7A8D59028AC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicTracker.Infrastructure", "ComicTracker.Infrastructure\ComicTracker.Infrastructure.csproj", "{EEFA6A78-E1FE-43C1-A382-93CE4B11F8CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D818EAAF-ED1F-401B-B99E-3C301FAE6417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D818EAAF-ED1F-401B-B99E-3C301FAE6417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D818EAAF-ED1F-401B-B99E-3C301FAE6417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D818EAAF-ED1F-401B-B99E-3C301FAE6417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08EBA5D3-8EC3-403A-B7D9-662F08430477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08EBA5D3-8EC3-403A-B7D9-662F08430477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08EBA5D3-8EC3-403A-B7D9-662F08430477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08EBA5D3-8EC3-403A-B7D9-662F08430477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CDBF13-6C3E-4154-AAF7-7A8D59028AC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CDBF13-6C3E-4154-AAF7-7A8D59028AC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CDBF13-6C3E-4154-AAF7-7A8D59028AC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CDBF13-6C3E-4154-AAF7-7A8D59028AC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEFA6A78-E1FE-43C1-A382-93CE4B11F8CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEFA6A78-E1FE-43C1-A382-93CE4B11F8CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEFA6A78-E1FE-43C1-A382-93CE4B11F8CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEFA6A78-E1FE-43C1-A382-93CE4B11F8CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
