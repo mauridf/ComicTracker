@@ -35,6 +35,9 @@ builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<ICharacterService, CharacterService>();
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 
+builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(c =>
