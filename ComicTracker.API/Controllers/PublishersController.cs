@@ -30,8 +30,10 @@ public class PublishersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ServiceResponse<List<ComicVinePublisher>>>> Search(string name)
     {
+        _logger.LogInformation("Iniciando busca por Editoras com o nome: {name} na API da Comic Vine", name);
         if (string.IsNullOrWhiteSpace(name))
         {
+            _logger.LogWarning("Não foi informado um nome para efetuar a pesquia");
             return BadRequest(new ServiceResponse<List<ComicVinePublisher>>
             {
                 Success = false,
@@ -42,11 +44,12 @@ public class PublishersController : ControllerBase
         try
         {
             var response = await _publisherService.SearchPublishers(name);
+            _logger.LogInformation("Editoras com o nome {name} encontradas com sucesso", name);
             return response.Success ? Ok(response) : BadRequest(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error searching publishers");
+            _logger.LogError(ex, "Erro ao buscar editora com nome {name}", name);
             return StatusCode(500, new ServiceResponse<List<ComicVinePublisher>>
             {
                 Success = false,
@@ -65,8 +68,10 @@ public class PublishersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ServiceResponse<Publisher>>> Create(PublisherCreateDto publisherDto)
     {
+        _logger.LogInformation("Iniciando o registro de uma nova Editora");
         if (!ModelState.IsValid)
         {
+            _logger.LogWarning("Dado inválido");
             return BadRequest(new ServiceResponse<Publisher>
             {
                 Success = false,
@@ -80,13 +85,17 @@ public class PublishersController : ControllerBase
             var response = await _publisherService.CreatePublisher(publisherDto);
 
             if (!response.Success)
+            {
+                _logger.LogWarning("Erro na gravação da Editora");
                 return BadRequest(response);
+            }
 
+            _logger.LogInformation("Editora registrada com sucesso");
             return CreatedAtAction(nameof(GetById), new { id = response.Data?.Id }, response);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error creating publisher");
+            _logger.LogError(ex, "Erro no registro da Editora");
             return StatusCode(500, new ServiceResponse<Publisher>
             {
                 Success = false,
@@ -105,18 +114,23 @@ public class PublishersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServiceResponse<Publisher>>> GetById(int id)
     {
+        _logger.LogInformation("Iniciando a busca da Editora com Id:{Id}", id);
         try
         {
             var response = await _publisherService.GetPublisherById(id);
 
             if (!response.Success)
+            {
+                _logger.LogWarning("Editora não localizada");
                 return NotFound(response);
+            }
 
+            _logger.LogInformation("Editora id: {Id} localizada com sucesso", id);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error getting publisher with ID {id}");
+            _logger.LogError(ex, $"Erro ao buscar Editora com o ID {id}");
             return StatusCode(500, new ServiceResponse<Publisher>
             {
                 Success = false,
@@ -133,14 +147,16 @@ public class PublishersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ServiceResponse<List<Publisher>>>> GetAll()
     {
+        _logger.LogInformation("Iniciando a busca de Todas as Editoras cadastradas");
         try
         {
             var response = await _publisherService.GetAllPublishers();
+            _logger.LogInformation("Todas as editoras cadastradas listadas com sucesso");
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error getting all publishers");
+            _logger.LogError(ex, "Erro ao buscar todas as editoras");
             return StatusCode(500, new ServiceResponse<List<Publisher>>
             {
                 Success = false,
@@ -161,8 +177,10 @@ public class PublishersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ServiceResponse<Publisher>>> Update(int id, PublisherUpdateDto publisherDto)
     {
+        _logger.LogInformation("Iniciando a atualização dos dados da Editora {Id}", id);
         if (id != publisherDto.Id)
         {
+            _logger.LogWarning("Erro na atualização da Editora");
             return BadRequest(new ServiceResponse<Publisher>
             {
                 Success = false,
@@ -172,6 +190,7 @@ public class PublishersController : ControllerBase
 
         if (!ModelState.IsValid)
         {
+            _logger.LogWarning("Dado Inválido");
             return BadRequest(new ServiceResponse<Publisher>
             {
                 Success = false,
@@ -185,13 +204,17 @@ public class PublishersController : ControllerBase
             var response = await _publisherService.UpdatePublisher(publisherDto);
 
             if (!response.Success)
+            {
+                _logger.LogWarning("Ocorreu algum erro na atualização da Editora");
                 return NotFound(response);
+            }
 
+            _logger.LogInformation("Editora {Id} atualizada com sucesso.", id);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error updating publisher with ID {id}");
+            _logger.LogError(ex, $"Erro ao atualizar Editora ID {id}");
             return StatusCode(500, new ServiceResponse<Publisher>
             {
                 Success = false,
@@ -210,18 +233,23 @@ public class PublishersController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id)
     {
+        _logger.LogInformation("Iniciando a exclusão da Editora {Id}", id);
         try
         {
             var response = await _publisherService.DeletePublisher(id);
 
             if (!response.Success)
+            {
+                _logger.LogWarning("Ocorreu algum erro na exclusão da Editora");
                 return NotFound(response);
+            }
 
+            _logger.LogInformation("Editora {Id} excluida com sucesso.", id);
             return NoContent();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"Error deleting publisher with ID {id}");
+            _logger.LogError(ex, $"Erro ao deletar Editora com ID {id}");
             return StatusCode(500, new ServiceResponse<Publisher>
             {
                 Success = false,
