@@ -38,6 +38,9 @@ builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<ITeamService, TeamService>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
+builder.Services.AddScoped<IVolumeService, VolumeService>();
+builder.Services.AddScoped<IVolumeRepository, VolumeRepository>();
+
 builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen(c =>
