@@ -6,6 +6,8 @@ using ComicTracker.Infrastructure.Repositories;
 using ComicTracker.Infrastructure.Services.ComicVine;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,20 @@ builder.Services.AddHttpClient<IComicVineService, ComicVineService>(client =>
     AutomaticDecompression = System.Net.DecompressionMethods.GZip | System.Net.DecompressionMethods.Deflate
 });
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString;
+        options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    });
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
+
 // Registrar repositórios e serviços
 builder.Services.AddScoped<IPublisherService, PublisherService>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
@@ -40,6 +56,9 @@ builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
 builder.Services.AddScoped<IVolumeService, VolumeService>();
 builder.Services.AddScoped<IVolumeRepository, VolumeRepository>();
+
+builder.Services.AddScoped<IIssueService, IssueService>();
+builder.Services.AddScoped<IIssueRepository, IssueRepository>();
 
 builder.Services.AddControllers();
 

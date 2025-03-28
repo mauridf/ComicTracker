@@ -64,5 +64,13 @@ public class ComicTrackerDbContext : DbContext
         modelBuilder.Entity<Issue>()
             .Property(i => i.Notes)
             .IsRequired(false);
+
+        modelBuilder.Entity<Issue>()
+           .Property(i => i.CoverDate)
+           .HasColumnType("timestamp without time zone");
+
+        modelBuilder.Entity<Issue>()
+           .Property(i => i.StoreDate)
+           .HasColumnType("timestamp without time zone");
     }
 }

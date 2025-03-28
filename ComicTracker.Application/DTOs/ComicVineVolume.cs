@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using ComicTracker.Application.Services;
+using System.Text.Json.Serialization;
 
 namespace ComicTracker.Application.DTOs;
 
@@ -6,6 +7,7 @@ public class ComicVineVolume
 {
     public string Aliases { get; set; }
     [JsonPropertyName("count_of_issues")]
+    [JsonConverter(typeof(FlexibleIntConverter))]
     public int CountOfIssues { get; set; }
     public string Deck { get; set; }
     public string Description { get; set; }
@@ -20,5 +22,6 @@ public class ComicVineVolume
     [JsonPropertyName("site_detail_url")]
     public string SiteDetailUrl { get; set; }
     [JsonPropertyName("start_year")]
-    public int StartYear { get; set; }
+    [JsonConverter(typeof(FlexibleIntConverter))]
+    public int? StartYear { get; set; }
 }

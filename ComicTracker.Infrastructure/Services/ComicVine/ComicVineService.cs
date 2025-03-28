@@ -78,4 +78,10 @@ public class ComicVineService : IComicVineService
         var url = $"issues/?api_key={_settings.Value.ApiKey}&format=json&filter=volume:{volumeId}";
         return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVineIssue>>(url);
     }
+
+    public async Task<ComicVineResponse<ComicVineIssue>> GetIssuesByVolume(int volumeId)
+    {
+        var url = $"issues/?api_key={_settings.Value.ApiKey}&format=json&filter=volume:{volumeId}";
+        return await _httpClient.GetFromJsonAsync<ComicVineResponse<ComicVineIssue>>(url);
+    }
 }

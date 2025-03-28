@@ -11,4 +11,5 @@ public interface IComicVineService
     Task<ComicVineResponse<ComicVineVolume>> GetVolumes(string filter);
     Task<ComicVineResponse<ComicVineIssue>> GetIssues(string filter);
     Task<ComicVineResponse<ComicVineIssue>> GetIssuesByVolumeId(int volumeId);
+    Task<ComicVineResponse<ComicVineIssue>> GetIssuesByVolume(int volumeId);
 }
